@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+	
+		<style>
+		.table-wrapper-scroll-y {
+		  
+			  display: none;
+			  max-height: 200px;
+			  overflow-y: auto;
+			  -ms-overflow-style: -ms-autohiding-scrollbar;
+		  
+		}
+		
+		.modal-dialog.modal-800 {
+			width: auto;
+			margin: auto;
+			left: 1%;
+			right: 1%;
+		}
+		</style>
+	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="clan.json"></script>
+		<script src="players.json"></script>
+		<script src="clan.js"></script>
+	</head>
+	
+	<body>
+		<div class="jumbotron text-center">
+			<h1 id="clanName"><h1>
+			<img id="clanBadge" />
+			<p id="description"></p>
+		</div>
+		
+		<div class="container">
+			<div class="row">
+				<div  class="col-md-12">
+					<div class="table-responsive">
+						<table id="players" class="table table-striped table-hover">
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="modal fade " id="playerData" role="dialog">
+		
+			<div class="modal-dialog modal-800">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header jumbotron">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					<div class="container">
+					  <div class="row">
+					    <div class="col-sm-3">
+						  <img id="modal-player-badge" style="left:5px"> </img>
+						</div>
+						<div class="col-sm-9">
+						  <h1 id="modal-player-name" style="text-align:center"></h1>
+					    </div>
+					  </div>
+					</div>
+				</div>
+				<div class="modal-body">
+				  <div class="containter">
+					<div class="row">						
+						<div class="col-sm-3">
+							<div class="well">
+								<table class="table">
+									<tr>
+										<th >Name</th>
+										<td id="modal-player-name"></td>
+									</tr>
+									<tr>
+										<th >Role</th>
+										<td id="modal-player-role"></td>
+									</tr>
+									<tr>
+										<th>Level</th>
+										<td id="playerLevel"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="well">
+								<table class="table">
+									<tr>
+										<th>Town Hall</th>
+										<td id="townHallLevel"> </td>
+									</tr>
+									<tr>
+										<th>Builder Hall</th>
+										<td id="builderHallLevel"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="well">
+								<table class="table">
+									<tr>
+										<th>Trophies</th>
+										<td id="playerTrophies"></td>
+									</tr>
+									<tr>
+										<th>Best Ever Trophies</th>
+										<td id="playerBestTrophies"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						
+						<div class="col-sm-3">
+							<div class="well">
+								<table class="table">
+									<tr>
+										<th>War Stars</th>
+										<td id="playerWarStars"></td>
+									</tr>
+									<tr>
+										<th>Attack Wins</th>
+										<td id="playerAttackWins"></td>
+									</tr>
+									<tr>
+										<th>Defense Wins</th>
+										<td id="playerDefenseWins"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					
+					
+					</div>
+					
+					
+					<div id="troop-trigger" class="row">
+							<h1>Troops</h1>
+							<div id="troop-table" class="table-wrapper-scroll-y">
+								<table class="table table-striped">
+									<tr>
+										<th>Name</th>
+										<th>Level</th>
+										<th>Village</th>
+									</tr>
+									<tbody id="troop-data"></tbody>
+								</table>
+							</div>
+							
+					</div>
+					
+					<div id="hero-trigger" class="row">
+							<h1>Heros</h1>
+							<div id="hero-table" class="table-wrapper-scroll-y">
+								<table class="table table-striped table-condensed">
+									<tr>
+										<th>Name</th>
+										<th>Level</th>
+										<th>Village</th>
+									</tr>
+									<tbody id="hero-data"></tbody>
+								</table>
+							</div>
+							
+					</div>
+					
+					<div id="spell-trigger" class="row">
+						<h1>Spells</h1>
+						<div id="spell-table" class="table-wrapper-scroll-y">
+								<table class="table table-striped table-condensed">
+									<tr>
+										<th>Name</th>
+										<th>Level</th>
+										<th>Villiage</th>
+									</tr>
+									<tbody id="spell-data"></tbody>
+								</table>
+							</div>
+						
+					</div>
+					
+					<div id="achievement-trigger" class="row">
+						<h1>Achievements</h1>
+						<div id="achievement-table" class="table-wrapper-scroll-y">
+								<table class="table table-striped table-condensed">
+									<tr>
+										<th>Name</th>
+										<th>Stars</th>
+										<th>Achieved / Out Of</th>
+										<th>Description</th>
+										<th>Extra Info</th>
+										<th>village</th>
+									</tr>
+									<tbody id="achievement-data"></tbody>
+								</table>
+							</div>
+						
+					</div>
+					
+					
+				  </div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			  
+			</div>
+  </div>
+		
+	</body>
+	
+	<footer>
+	
+	</footer>
+
+
+
+</html>
