@@ -74,6 +74,12 @@ $(document).ready(function () {
 			} else if(tag == "league") {
 				var tableData = $('<td style="vertical-align:middle"></td>').text(data["memberList"][i][tag]['name']);
 				row.append(tableData);
+			} else if(tag == "role") {
+				var role = data["memberList"][i][tag];
+				if(role == 'admin') {
+					role = 'elder';
+				}
+				row.append($('<td style="vertical-align:middle"></td>').text(role));
 			} else {
 				row.append($('<td style="vertical-align:middle"></td>').text(data["memberList"][i][tag]));
 			}
@@ -96,9 +102,14 @@ function buildModalFromPlayer(playerName) {
 	var spells = player['spells'];
 	var heros = player['heroes'];
 	var achievements = player['achievements'];
+	var role = player['role'];
+	if(role == 'admin') {
+		role = 'elder'
+	}
 	
 	$('#modal-player-name').html(player['name']);
-	$('#modal-player-role').html(player['role']);
+	$('#table-player-name').html(player['name']);
+	$('#modal-player-role').html(role);
 	$('#playerLevel').html(player['expLevel']);
 	$('#townHallLevel').html(player['townHallLevel']);
 	$('#builderHallLevel').html(player['builderHallLevel']);
