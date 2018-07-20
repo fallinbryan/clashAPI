@@ -6,7 +6,7 @@ $(document).ready(function () {
 		var tag = $("#clanTagSearch").val();
 		if(check.test(tag)){
 			defaultClanTag = tag;
-			populateClanPage(defaultClanTag);
+			populuateClanPage(defaultClanTag);
 		} else {
 			alert("bad tag " + $("#clanTagSearch").val() );
 		}
