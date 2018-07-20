@@ -1,6 +1,16 @@
 var defaultClanTag = '#2UPGPLYQ';
 
 $(document).ready(function () {
+		$("button").click(function() {
+		var check = /#\w{8}/;
+		var tag = $("#clanTagSearch").val()) 
+		if(check.test(tag)){
+			defaultClanTag = tag;
+			populateClanPage(defaultClanTag);
+		} else {
+			alert("bad tag " + $("#clanTagSearch").val() );
+		}
+	});
 	
 		$("#troop-trigger").click(function() {
 		$("#troop-table").slideToggle();
@@ -153,6 +163,7 @@ function populuateClanPage(clanTag) {
 		$('#description').text(data['description']);
 		
 		var playerTable = $('#players');
+		playerTable.empty();
 		var row = $('<tr>');
 		for(tag in data['memberList'][0]) {
 			if(tag == "previousClanRank" ||
