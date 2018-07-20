@@ -1,3 +1,4 @@
+var data = getClanData('#2UPGPLYQ');
 
 $(document).ready(function () {
 	$("#troop-trigger").click(function() {
@@ -199,6 +200,23 @@ function getPlayer(playerName) {
 	}
 }
 
+function getClanData(clanTag) {
+  var clanJson; 
+   function setData(data) {
+    console.log('in setDat');
+    clanJson = data;
+    
+  }
+  var uri='clan?tag=' + clanTag.replace('#','%23');
+  console.log(uri);
+  $.getJSON(uri, function(data, staus, result) {
+    
+    setData(data); 
+    console.log(clanJson); 
+  });
+  
+  
+}
 
 
 
