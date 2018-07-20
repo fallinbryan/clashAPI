@@ -1,101 +1,35 @@
-var data = getClanData('#2UPGPLYQ');
+var defaultClanTag = '#2UPGPLYQ';
 
 $(document).ready(function () {
-	$("#troop-trigger").click(function() {
+	
+		$("#troop-trigger").click(function() {
 		$("#troop-table").slideToggle();
-	});
-	$("#spell-trigger").click(function() {
-		$("#spell-table").slideToggle();
-	});
-	
-	$("#hero-trigger").click(function() {
-		$("#hero-table").slideToggle();
-	});
-	
-	$("#achievement-trigger").click(function() {
-		$("#achievement-table").slideToggle();
-	});
-	
-	
-	
-	 $("#playerData").on('hide.bs.modal', function () {
-            $("#troop-table").slideUp();
+		});
+		$("#spell-trigger").click(function() {
+			$("#spell-table").slideToggle();
+		});
+		
+		$("#hero-trigger").click(function() {
+			$("#hero-table").slideToggle();
+		});
+		
+		$("#achievement-trigger").click(function() {
+			$("#achievement-table").slideToggle();
+		});
+		
+		$("#playerData").on('hide.bs.modal', function () {
+			$("#troop-table").slideUp();
 			$("#spell-table").slideUp();
 			$("#hero-table").slideUp();
 			$("#achievement-table").slideUp();
-	 });
-	
-	
-	$("#clanName").text('Clan '+data["name"]);
-	$("#clanBadge").attr({
-		'src' : data['badgeUrls']['medium'],
-		'align' : 'center'
-		})
-	$('#description').text(data['description']);
-	
-	var playerTable = $('#players');
-	var row = $('<tr>');
-	for(tag in data['memberList'][0]) {
-		if(tag == "previousClanRank" ||
-		   tag == "donations" ||
-		   tag == "donationsReceived") {
-			continue;
-		}
-		row.append( $('<th style="text-align:left"></th>').text(tag.toLocaleUpperCase()) );
+		 });
 		
-	}
-	row.append($('<th style="text-align:left"></th>').text('DONATION RATIO') );
-	playerTable.append(row);
-	
-	var tableBody = $('<tbody>');
-	for(var i =0; i < data["memberList"].length; i++) {
-		var row = $('<tr>');
-		var donations = 0;
-		var donationRecvd = 0;
-		var donationRation = 0;
-		for(tag in data["memberList"][i]) {
-			if(tag == "previousClanRank") {
-				continue;
-			} else if (tag == "name") { 
-				var playerName = data["memberList"][i]['name'];
-				var tableData = $('<td id="playerName" style="vertical-align:middle"></td>').text(playerName);
-				var image = document.createElement('img');
-				image.setAttribute("src",data["memberList"][i]["league"]['iconUrls']['small'])
-				tableData.prepend(image);
-				$(tableData).click(function() {
-					buildModalFromPlayer($(this).text())
-					
-					
-				});
-				row.append(tableData);
-			}else if (tag == "donations" ) {
-					donations = data["memberList"][i]["donations"];
-			} else if (tag == "donationsReceived") {
-					donationRecvd = data["memberList"][i]["donationsReceived"];
-			} else if(tag == "league") {
-				var tableData = $('<td style="vertical-align:middle"></td>').text(data["memberList"][i][tag]['name']);
-				row.append(tableData);
-			} else if(tag == "role") {
-				var role = data["memberList"][i][tag];
-				if(role == 'admin') {
-					role = 'elder';
-				}
-				row.append($('<td style="vertical-align:middle"></td>').text(role));
-			} else {
-				row.append($('<td style="vertical-align:middle"></td>').text(data["memberList"][i][tag]));
-			}
-		}
-		donationRation = donations/donationRecvd;
-		row.append($('<td style="vertical-align:middle"></td>').text(  (donationRation).toFixed(2)  ));
-		if(donationRation < 0.5) {
-			row.addClass("warning");
-		}
-		tableBody.append(row);
-	}
-	playerTable.append(tableBody);
-	
+		populuateClanPage(defaultClanTag)
+	  
+
 });
 
+//// end of doc ready
 function buildModalFromPlayer(playerName) {
 	var player = getPlayer(playerName);
 	var playerTownHall = player['townHallLevel'];
@@ -200,22 +134,80 @@ function getPlayer(playerName) {
 	}
 }
 
-function getClanData(clanTag) {
-  var clanJson; 
-   function setData(data) {
-    console.log('in setDat');
-    clanJson = data;
-    
-  }
-  var uri='clan?tag=' + clanTag.replace('#','%23');
-  console.log(uri);
-  $.getJSON(uri, function(data, staus, result) {
-    
-    setData(data); 
-    console.log(clanJson); 
-  });
-  
-  
+function populuateClanPage(clanTag) {
+	var uri='clan?tag=' + clanTag.replace('#','%23');
+	$.getJSON( uri, function(data, staus, result) {
+		
+		$("#clanName").text('Clan '+data["name"]);
+		$("#clanBadge").attr({
+			'src' : data['badgeUrls']['medium'],
+			'align' : 'center'
+			})
+		$('#description').text(data['description']);
+		
+		var playerTable = $('#players');
+		var row = $('<tr>');
+		for(tag in data['memberList'][0]) {
+			if(tag == "previousClanRank" ||
+			   tag == "donations" ||
+			   tag == "donationsReceived") {
+				continue;
+			}
+			row.append( $('<th style="text-align:left"></th>').text(tag.toLocaleUpperCase()) );
+			
+		}
+		row.append($('<th style="text-align:left"></th>').text('DONATION RATIO') );
+		playerTable.append(row);
+		
+		var tableBody = $('<tbody>');
+		for(var i =0; i < data["memberList"].length; i++) {
+			var row = $('<tr>');
+			var donations = 0;
+			var donationRecvd = 0;
+			var donationRation = 0;
+			for(tag in data["memberList"][i]) {
+				if(tag == "previousClanRank") {
+					continue;
+				} else if (tag == "name") { 
+					var playerName = data["memberList"][i]['name'];
+					var tableData = $('<td id="playerName" style="vertical-align:middle"></td>').text(playerName);
+					var image = document.createElement('img');
+					image.setAttribute("src",data["memberList"][i]["league"]['iconUrls']['small'])
+					tableData.prepend(image);
+					$(tableData).click(function() {
+						buildModalFromPlayer($(this).text())
+						
+						
+					});
+					row.append(tableData);
+				}else if (tag == "donations" ) {
+						donations = data["memberList"][i]["donations"];
+				} else if (tag == "donationsReceived") {
+						donationRecvd = data["memberList"][i]["donationsReceived"];
+				} else if(tag == "league") {
+					var tableData = $('<td style="vertical-align:middle"></td>').text(data["memberList"][i][tag]['name']);
+					row.append(tableData);
+				} else if(tag == "role") {
+					var role = data["memberList"][i][tag];
+					if(role == 'admin') {
+						role = 'elder';
+					}
+					row.append($('<td style="vertical-align:middle"></td>').text(role));
+				} else {
+					row.append($('<td style="vertical-align:middle"></td>').text(data["memberList"][i][tag]));
+				}
+			}
+			donationRation = donations/donationRecvd;
+			row.append($('<td style="vertical-align:middle"></td>').text(  (donationRation).toFixed(2)  ));
+			if(donationRation < 0.5) {
+				row.addClass("warning");
+			}
+			tableBody.append(row);
+		}
+		playerTable.append(tableBody);
+	});
+	
+	
 }
 
 
