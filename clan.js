@@ -184,7 +184,7 @@ function populuateClanPage(clanTag) {
 					row.append(tableData);
 				} else if (tag == "tag") {
 					
-					row.append($('<td id="playerTag" style="vertical-align:middle"></td>').text(data["memberList"][i][tag])));
+					row.append($('<td id="playerTag" style="vertical-align:middle"></td>').text(data["memberList"][i][tag]));
 				}else if (tag == "donations" ) {
 						donations = data["memberList"][i]["donations"];
 				} else if (tag == "donationsReceived") {
