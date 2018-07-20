@@ -3,7 +3,7 @@ var defaultClanTag = '#2UPGPLYQ';
 $(document).ready(function () {
 		$("button").click(function() {
 		var check = /#\w{8}/;
-		var tag = $("#clanTagSearch").val()) 
+		var tag = $("#clanTagSearch").val();
 		if(check.test(tag)){
 			defaultClanTag = tag;
 			populateClanPage(defaultClanTag);
