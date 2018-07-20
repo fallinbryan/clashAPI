@@ -1,5 +1,13 @@
 
 $(document).ready(function () {
+	$("button").click(function() {
+		var check = /#\w{8}/;
+		if(check.test($("#clanTagSearch").val()) ){
+			alert("good tag " +  $("#clanTagSearch").val() );
+		} else {
+			alert("bad tag " + $("#clanTagSearch").val() );
+		}
+	});
 	$("#troop-trigger").click(function() {
 		$("#troop-table").slideToggle();
 	});
